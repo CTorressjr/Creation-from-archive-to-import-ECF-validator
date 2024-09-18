@@ -9,8 +9,12 @@ def ECF_RETIFICADORA():
     for linha in tabela.index:
         #IDENTIFICAÇÃO DA SCP RETIFICADORA
         VARIAVEL_RECIBO = tabela.loc[linha, 'recibo']
-        VARIAVEL_CNPJ = tabela.loc[linha, 'cnpj']
-        VARIAVEL_CPF = tabela.loc[linha, 'cpf']
+        #Esta variavel carrega o digito ''1'' no inicio para segurar os 0 a esquerda
+        VARIAVEL_CNPJ1 = tabela.loc[linha, 'cnpj']
+        VARIAVEL_CNPJ = VARIAVEL_CNPJ1[1:]        
+        VARIAVEL_CPF1 = tabela.loc[linha, 'cpf']
+        VARIAVEL_CPF = VARIAVEL_CPF1[1:]
+        
         VARIAVEL_NOME = tabela.loc[linha, 'nome']
         #TRIMESTRE
         TRIMESTRE1 = tabela.loc[linha, 'TRI1']
