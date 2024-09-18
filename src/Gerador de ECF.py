@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-# Caminho para o arquivo CSV e a pasta de saída
+# Caminho para o arquivo CSV e a pasta de saídaa
 tabela = pd.read_csv(r'C:\Users\PC\Desktop\Creation-from-archive-to-import-ECF-validator\data\LINHA TESTE (1).csv', sep=';')
 output_folder = r'C:\Users\PC\Desktop\ECF com movimento'
 
