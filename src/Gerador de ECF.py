@@ -2,8 +2,8 @@ import os
 import pandas as pd
 
 # Caminho para o arquivo CSV e a pasta de saídaa
-tabela = pd.read_csv(r'C:\Users\PC\Desktop\Creation-from-archive-to-import-ECF-validator\data\LINHA TESTE (1).csv', sep=';')
-output_folder = r'C:\Users\PC\Desktop\ECF com movimento'
+tabela = pd.read_csv(r'C:\Users\PC\Desktop\Retificar - ECF COM RECIBO FINAL FINAL 3.csv', sep=';')
+output_folder = r'C:\Users\PC\Desktop\CSV E ECF'
 
 def ECF_RETIFICADORA():
     for linha in tabela.index:
@@ -11,9 +11,10 @@ def ECF_RETIFICADORA():
         VARIAVEL_RECIBO = tabela.loc[linha, 'recibo']
         #Esta variavel carrega o digito ''1'' no inicio para segurar os 0 a esquerda
         VARIAVEL_CNPJ1 = tabela.loc[linha, 'cnpj']
-        VARIAVEL_CNPJ = VARIAVEL_CNPJ1[1:]        
+        VARIAVEL_CNPJ = (str(VARIAVEL_CNPJ1)[1:])
+
         VARIAVEL_CPF1 = tabela.loc[linha, 'cpf']
-        VARIAVEL_CPF = VARIAVEL_CPF1[1:]
+        VARIAVEL_CPF = (str(VARIAVEL_CPF1)[1:])
         
         VARIAVEL_NOME = tabela.loc[linha, 'nome']
         #TRIMESTRE
@@ -46,13 +47,13 @@ def ECF_RETIFICADORA():
 
         
         #falta o + antes do igual
-        template_inicial = f'''|0000|LECF|0010|CNPJ|NOME DA OSTENSIVA|0|0|||01012023|31122023|S|{VARIAVEL_RECIBO}|2|{VARIAVEL_CNPJ}|
+        template_inicial = f'''|0000|LECF|0010|21609217000173|MEDICALMAIS SERVICOS EM SAUDE LTDA|0|0|||01012023|31122023|S|{VARIAVEL_RECIBO}|2|{VARIAVEL_CNPJ}|
 |0001|0|
 |0010||N|5|T|01|PPPP||L||||1|
 |0020|1||N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|N|
-|0030|2062|8610101|RUA |6||BAIRRO|PE|2604106|55014415|DDD+N|EMAIL|
-|0930|PROCURADOR|CPF DO PROCURADOR|900|CRC|E-MAIL PROCURADOR|DDD+N|
-|0930|PROCURADOR|CPF DO PROCURADOR|309||E-MAIL PROCURADOR|DDD+N|
+|0030|2062|8610101|RUA AYRES DA CUNHA|6||MAURICIO DE NASSAU|PE|2604106|55014415|81998403104|MEDICALMAIS@BOL.COM.BR|
+|0930|JULIO CESAR DIAS OLIVEIRA|86827790487|900|CRC|JULIOCESAR@CONTROLLERSBR.COM|8194442054|
+|0930|JULIO CESAR DIAS OLIVEIRA|86827790487|309||JULIOCESAR@CONTROLLERSBR.COM|8194442054|
 |0990|8|
 |P001|0|'''
 
@@ -76,7 +77,7 @@ def ECF_RETIFICADORA():
 |P500|4|TOTAL DA CONTRIBUIÇÃO SOCIAL SOBRE O LUCRO LÍQUIDO|{VARIAVEL_I9D32T1}|
 |P500|5|DEDUÇÕES||
 |P500|13|CSLL A PAGAR|{VARIAVEL_I9D32T1}|'''
-        
+
         template_valort2 = f'''
 |P030|01042023|30062023|{TRIMESTRE2}|
 |P200|1|DISCRIMINAÇÃO DA RECEITA BRUTA||
@@ -97,7 +98,7 @@ def ECF_RETIFICADORA():
 |P500|4|TOTAL DA CONTRIBUIÇÃO SOCIAL SOBRE O LUCRO LÍQUIDO|{VARIAVEL_I9D32T2}|
 |P500|5|DEDUÇÕES||
 |P500|13|CSLL A PAGAR|{VARIAVEL_I9D32T2}|'''
-        
+
         template_valort3 = f'''
 |P030|01072023|30092023|{TRIMESTRE3}|
 |P200|1|DISCRIMINAÇÃO DA RECEITA BRUTA||
@@ -118,8 +119,8 @@ def ECF_RETIFICADORA():
 |P500|4|TOTAL DA CONTRIBUIÇÃO SOCIAL SOBRE O LUCRO LÍQUIDO|{VARIAVEL_I9D32T3}|
 |P500|5|DEDUÇÕES||
 |P500|13|CSLL A PAGAR|{VARIAVEL_I9D32T3}|'''
-        
-        template_valort4 = f'''
+
+        template_valort4 = r"""
 |P030|01102023|31122023|{TRIMESTRE4}|
 |P200|1|DISCRIMINAÇÃO DA RECEITA BRUTA||
 |P200|8|Receita Bruta Sujeita ao Percentual de 32%|{VARIAVEL_T4}|
@@ -138,9 +139,8 @@ def ECF_RETIFICADORA():
 |P500|2|CSLL Apurada|{VARIAVEL_I9D32T4}|
 |P500|4|TOTAL DA CONTRIBUIÇÃO SOCIAL SOBRE O LUCRO LÍQUIDO|{VARIAVEL_I9D32T4}|
 |P500|5|DEDUÇÕES||
-|P500|13|CSLL A PAGAR|{VARIAVEL_I9D32T4}|
-'''
-        
+|P500|13|CSLL A PAGAR|{VARIAVEL_I9D32T4}|"""
+
         template_zerado1 = f'''
 |P030|01012023|31032023|{TRIMESTRE1}|
 |P200|1|DISCRIMINAÇÃO DA RECEITA BRUTA||
@@ -148,7 +148,7 @@ def ECF_RETIFICADORA():
 |P300|6|DEDUÇÕES||
 |P400|1|CÁLCULO DA CSLL||
 |P500|5|DEDUÇÕES||'''
-        
+
         template_zerado2 = f'''
 |P030|01042023|30062023|{TRIMESTRE2}|
 |P200|1|DISCRIMINAÇÃO DA RECEITA BRUTA||
@@ -156,7 +156,7 @@ def ECF_RETIFICADORA():
 |P300|6|DEDUÇÕES||
 |P400|1|CÁLCULO DA CSLL||
 |P500|5|DEDUÇÕES||'''
-        
+
         template_zerado3 = f'''
 |P030|01072023|30092023|{TRIMESTRE3}|
 |P200|1|DISCRIMINAÇÃO DA RECEITA BRUTA||
@@ -164,7 +164,7 @@ def ECF_RETIFICADORA():
 |P300|6|DEDUÇÕES||
 |P400|1|CÁLCULO DA CSLL||
 |P500|5|DEDUÇÕES||'''
-        
+
         template_zerado4 = f'''
 |P030|01102023|31122023|{TRIMESTRE4}|
 |P200|1|DISCRIMINAÇÃO DA RECEITA BRUTA||
@@ -172,30 +172,30 @@ def ECF_RETIFICADORA():
 |P300|6|DEDUÇÕES||
 |P400|1|CÁLCULO DA CSLL||
 |P500|5|DEDUÇÕES||'''
-        
+
         
 
         BLOCO_INICIAL = template_inicial
         #Testa o valor do trimestre para a construção do bloco com ou sem valor
-        if VARIAVEL_T1 !=0:
+        if str(VARIAVEL_T1) !=(str(0)):
             BLOCO1 = template_valort1
         
         else:
             BLOCO1 = template_zerado1
 
-        if VARIAVEL_T2 !=0:
+        if str(VARIAVEL_T2) !=(str(0)):
             BLOCO2 = template_valort2
         
         else:
             BLOCO2 = template_zerado2    
             
-        if VARIAVEL_T3 !=0:
+        if str(VARIAVEL_T3) !=(str(0)):
             BLOCO3 = template_valort3
         
         else:
             BLOCO3 = template_zerado3    
 
-        if VARIAVEL_T4 !=0:
+        if str(VARIAVEL_T4) !=(str(0)):
             BLOCO4 = template_valort4
         
         else:
@@ -206,12 +206,12 @@ def ECF_RETIFICADORA():
         BLOCO_TEMP = f"{BLOCO_INICIAL}{BLOCO1}{BLOCO2}{BLOCO3}{BLOCO4}"
 
         CONT_LINHA_TEMP = len(BLOCO_TEMP.splitlines())
-    
+        
         #conta linha e adiciona as linhas do bloco final
         CONT_LINHA = CONT_LINHA_TEMP + 38
         
         #Conta todas as ocorrências de |P, |P200 e os demais e guarda na variavel
-        CONT_P = len([linha for linha in BLOCO_TEMP.splitlines() if '|P' in linha]) - 2
+        CONT_P = len([linha for linha in BLOCO_TEMP.splitlines() if '|P' in linha]) - 1
         
         CONT_P200 = len([linha for linha in BLOCO_TEMP.splitlines() if '|P200' in linha])
 
@@ -221,13 +221,14 @@ def ECF_RETIFICADORA():
 
         CONT_P500 = len([linha for linha in BLOCO_TEMP.splitlines() if '|P500' in linha])
 
-        template_final = f'''|P990|{CONT_P}|
+        template_final = f'''
+|P990|{CONT_P}|
 |Q001|0|
 |Q100|01012023||SALDO ANTERIOR|0,00|0,00|0,00|
 |Q990|3|
 |Y001|0|
 |Y600|04092017||105|PF|{VARIAVEL_CPF}|{VARIAVEL_NOME}|02|83,6700|0,00|||0,00|0,00|0,00|0,00|0,00|
-|Y600|04092017||105|PJ|CNPJ|NOME DA OSTENSIVA|04|16,3300|0,00|||0,00|0,00|0,00|0,00|0,00|
+|Y600|04092017||105|PJ|21609217000173|MEDICALMAIS SERVICOS EM SAUDE LTDA|04|16,3300|0,00|||0,00|0,00|0,00|0,00|0,00|
 |Y672|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|0,00|1|
 |Y720||||N||
 |Y990|6|
@@ -260,11 +261,12 @@ def ECF_RETIFICADORA():
 |9900|9999|1|||
 |9990|29|
 |9999|{CONT_LINHA}|\n'''
+
         
         BLOCO_FINAL = template_final
-
+        
         #monta ECF
-        ECF = f"{BLOCO_TEMP}{BLOCO_FINAL}"
+        ECF = f"{BLOCO_TEMP}\\{BLOCO_FINAL}"
         #nomeia os arquivos
         NOME_ARQ = str(VARIAVEL_CNPJ)+'.txt'
         #gera os arquivos na pasta apontada
@@ -273,8 +275,9 @@ def ECF_RETIFICADORA():
 
         CAMINHO_ARQ = os.path.join(DIRETORIO, NOME_ARQ)
 
-        with open(CAMINHO_ARQ, 'w') as arquivo:
-            arquivo.write(str(ECF))
-
+        with open(CAMINHO_ARQ, 'w', encoding='utf-8') as arquivo:
+            arquivo.write(ECF)
+        
+        
 ECF_RETIFICADORA()
     
