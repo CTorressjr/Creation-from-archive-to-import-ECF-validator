@@ -1,4 +1,4 @@
-# 📄 ECF Retificadora — Gerador em Lote
+# 📄 ECF Gerador — Gerador em Lote
 
 > Geração automatizada de arquivos ECF Retificadora no layout SPED da Receita Federal, processando múltiplas SCPs (Sociedades em Conta de Participação) a partir de uma planilha CSV com os dados tributários anuais.
 
@@ -111,17 +111,17 @@ pip install pandas openpyxl
 Edite as duas variáveis de configuração no início do script:
 
 ```python
-# Caminho para o CSV com os dados das SCPs
-tabela = pd.read_csv(r'caminho/para/seu/arquivo.csv', sep=';')
+# Linha 3 — caminho para o CSV com os dados das SCPs
+tabela = pd.read_csv(r'../data/LINHA TESTE (1).csv', sep=';')
 
-# Pasta onde os arquivos ECF serão gerados
-DIRETORIO = r'caminho/para/pasta/de/saida'
+# Dentro da função — pasta onde os arquivos ECF serão gerados
+DIRETORIO = r'../output'
 ```
 
 ### Execução
 
 ```bash
-python ECF_retificadora.py
+python Gerador de ECF.py
 ```
 
 Resultado: um arquivo `{CNPJ}.txt` por linha do CSV, gerado na pasta configurada.
@@ -151,13 +151,14 @@ Sem essa contagem correta, o validador da RFB (PGE/Receitanet) rejeita o arquivo
 ## 📁 Estrutura do Repositório
 
 ```
-ecf-retificadora/
+Creation-from-archive-to-import-ECF-validator/
 ├── README.md
-├── ECF_retificadora.py        ← Script principal
+├── .gitignore
 ├── data/
-│   └── modelo_entrada.csv     ← Modelo de CSV de entrada (dados fictícios)
-└── output/
-    └── .gitkeep               ← Pasta de saída (não versionada)
+│   └── LINHA TESTE (1).csv    ← Modelo de CSV de entrada (dados fictícios)
+│   └── Manual_de_Orientação_da_ECF_...
+└── src/
+    └── Gerador de ECF.py      ← Script principal
 ```
 
 > ⚠️ A pasta `data/` com arquivos reais e a pasta `output/` devem estar no `.gitignore`.
@@ -186,4 +187,4 @@ Este repositório faz parte de um conjunto de ferramentas de automação fiscal:
 
 ## ⚠️ Aviso Legal
 
-Os arquivos gerados devem ser validados com o PGE (Programa Gerador da ECF) antes da transmissão. O autor não se responsabiliza por transmissões incorretas. Dados reais de empresas nunca devem ser versionados no repositório.
+Os arquivos gerados devem ser validados com o VALIDADOR (Programa Gerador da ECF) antes da transmissão. O autor não se responsabiliza por transmissões incorretas. Dados reais de empresas nunca devem ser versionados no repositório.
